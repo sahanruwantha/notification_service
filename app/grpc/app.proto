@@ -1,0 +1,74 @@
+syntax = "proto3";
+
+package notification_service.app;
+
+import "google/protobuf/empty.proto";
+
+service NotificationController {
+    rpc Create(SendNotificationRequest) returns (NotificationResponse) {}
+    rpc Destroy(NotificationDestroyRequest) returns (google.protobuf.Empty) {}
+    rpc GetUnreadNotifications(GetUnreadNotificationsRequest) returns (NotificationListResponse) {}
+    rpc List(NotificationListRequest) returns (NotificationListResponse) {}
+    rpc MarkNotificationsAsRead(MarkNotificationsAsReadRequest) returns (google.protobuf.Empty) {}
+    rpc PartialUpdate(NotificationPartialUpdateRequest) returns (NotificationResponse) {}
+    rpc Retrieve(NotificationRetrieveRequest) returns (NotificationResponse) {}
+    rpc Update(NotificationRequest) returns (NotificationResponse) {}
+}
+
+message GetUnreadNotificationsRequest {
+    string user_id = 1;
+}
+
+message MarkNotificationsAsReadRequest {
+    repeated string user_ids = 1;
+}
+
+message NotificationDestroyRequest {
+    int32 id = 1;
+}
+
+message NotificationListRequest {
+}
+
+message NotificationListResponse {
+    repeated NotificationResponse notifications = 1;
+    int32 total_count = 2;
+}
+
+message NotificationPartialUpdateRequest {
+    optional int32 id = 1;
+    string user_id = 2;
+    int32 type = 3;
+    string payload = 4;
+    optional bool is_read = 5;
+    repeated string _partial_update_fields = 6;
+}
+
+message NotificationRequest {
+    optional int32 id = 1;
+    string user_id = 2;
+    int32 type = 3;
+    string payload = 4;
+    optional bool is_read = 5;
+}
+
+message NotificationResponse {
+    optional int32 id = 1;
+    string user_id = 2;
+    int32 type = 3;
+    string payload = 4;
+    optional bool is_read = 5;
+}
+
+message NotificationRetrieveRequest {
+    int32 id = 1;
+}
+
+message SendNotificationRequest {
+    optional int32 id = 1;
+    string user_id = 2;
+    int32 type = 3;
+    string payload = 4;
+    optional bool is_read = 5;
+}
+
