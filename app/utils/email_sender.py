@@ -32,7 +32,7 @@ def send_email(content, recipient_email="sahanr.silva@proton.me"):
         text = message.as_string()
         
         server.sendmail(sender_email, recipient_email, text)  
-        print(f"OTP sent successfully to {recipient_email}")
+        print(f"Email sent successfully to {recipient_email}")
     except Exception as e:
         print(f"Error: {e}")
     finally:
