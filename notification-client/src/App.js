@@ -1,5 +1,4 @@
 import React, { useState, useCallback } from 'react';
-import { Check } from 'lucide-react';
 import {
   NotificationRequest,
   GetUnreadNotificationsRequest,
@@ -291,7 +290,7 @@ const NotificationApp = () => {
                 </div>
                 <div className="notification-content">
                   <span className="notification-type">
-                    {NOTIFICATION_TYPES.find(t => t.value === notification.getType())?.label || 'Notification'}
+                    On site Notification
                   </span>
                   <p className="notification-payload">{notification.getPayload()}</p>
                 </div>
@@ -325,11 +324,6 @@ const NotificationApp = () => {
           transition: transform 0.2s, box-shadow 0.2s;
         }
         
-        .form-card:hover, .notifications-card:hover {
-          transform: translateY(-4px);
-          box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
-        }
-  
         .form-header, .notifications-header {
           display: flex;
           justify-content: space-between;
@@ -468,9 +462,26 @@ const NotificationApp = () => {
           color: #6b7280;
           padding: 2rem;
         }
+  
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+          .container {
+            grid-template-columns: 1fr;
+            gap: 1rem;
+            padding: 1rem;
+          }
+  
+          .form-card, .notifications-card {
+            padding: 1.5rem;
+          }
+  
+          .notifications-actions {
+            flex-direction: column;
+            gap: 0.5rem;
+          }
+        }
       `}</style>
     </div>
-  )}  
+  )}
   
-
-export default NotificationApp;
+  export default NotificationApp;
