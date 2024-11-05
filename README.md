@@ -17,7 +17,7 @@ graph TB
     subgraph "Backend Services"
         API[gRPC API Service]
         Worker[Celery Workers]
-        Cache[Redis Cache]
+        Cache[RabbitMQ]
         DB[(PostgreSQL)]
     end
 
@@ -43,7 +43,7 @@ graph TB
 - **Frontend**: React with gRPC-web
 - **Backend**: Django with django-socio-grpc
 - **Database**: PostgreSQL
-- **Cache & Message Broker**: Redis
+- **Cache & Message Broker**: RabbitMQ
 - **API Gateway**: Envoy Proxy
 - **Task Queue**: Celery
 - **Containerization**: Docker & Docker Compose
@@ -84,13 +84,13 @@ DB_PASSWORD=postgres
 DB_HOST=db
 DB_PORT=5432
 
-# Redis
-REDIS_HOST=redis
-REDIS_PORT=6379
+# RabbitMQ
+RABBITMQ_HOST=rabbitmq
+RABBITMQ_PORT=5672
 
 # Celery
-CELERY_BROKER_URL=redis://redis:6379/0
-CELERY_RESULT_BACKEND=redis://redis:6379/0
+CELERY_BROKER_URL=amqp://guest:guest@rabbitmq:5672//
+CELERY_RESULT_BACKEND=rpc://
 ```
 
 ## Installation & Setup
@@ -124,7 +124,7 @@ The application runs the following services:
 - Backend gRPC: `localhost:50051`
 - Envoy Proxy: `localhost:8080`
 - PostgreSQL: `localhost:5432`
-- Redis: `localhost:6379`
+- RabbitMQ: `localhost:5672`
 
 ## API Documentation
 
@@ -173,4 +173,4 @@ protoc -I./protos app.proto \
 
 - Django Admin: `http://localhost:8000/admin`
 - Celery Flower: `http://localhost:5555`
-- Redis Commander: `http://localhost:8081`
+- RabbitMQ Management: `http://localhost:15672` (default credentials: `guest`/`guest`)
